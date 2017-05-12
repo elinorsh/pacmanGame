@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="style.css" />
+  <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=La Belle Aurore" rel='stylesheet'>
+    <script src="jquery-3.2.0.min.js" type="text/javascript"></script>
+    <script src="jquery.validate.js" type="text/javascript"></script>
+    <script src="signin.js" type="text/javascript"></script>
+    <script src="mainWin.js" type="text/javascript"></script>
+    <script src="pacman.js" type="text/javascript"></script>
+
+	<title>Pacman Game</title>
+<img id="logo" src="pics\logo1.png" width="30%" onclick="ShowFirstMenu()">
+<label id="usernameLable">Hello, guest</label>
+	</head>
+
+<header id="banner">
+  <div id="mainmenu">
+  <a class="regularbutton" onclick="ShowAbout()">About & Instructions</a>
+  <a id="loginB" class="firstbutton" onclick="loginClick()">Log In</a>
+  <a id="signinB" class="firstbutton" onclick="signinClick()">Sign In</a>
+  <a id="logoutB" class="afterloginbutton" onclick="logoutClick()">Log Out</a>
+  </div>
+
+</header>
+
+<body>
+<div id="content">
+
+<div id="afterLoginMenu" class="content"> 
+<div class="wrapper">
+  <nav class="vertical">
+    <ul>
+      <li>
+        <div>
+          <ul>
+            <li> <a id="aboutB2" class="afterloginbutton" onclick="ShowAbout()">About & Instructions</a></li>
+            <li><a id="newgameB2" class="afterloginbutton" onclick="ShowSettings()">New Game</a></li>
+            <li><a id="logoutB2" class="afterloginbutton" onclick="logoutClick()">Log Out</a></li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+  </nav>
+</div>  
+</div>
+
+
+
+  <div id="game" class="content">
+    <p>
+    Name: <input id="lblUser" type="text" disabled/>
+    SCORE: <input id="lblScore" type="text" disabled/>
+        TIME: <input id="lblTime" type="text" disabled/>   
+        <img id="heart1" src="pics\heart.png" width="30">
+        <img id="heart2" src="pics\heart.png" width="30">
+        <img id="heart3" src="pics\heart.png" width="30"></p>
+        <canvas id="canvas"></canvas>
+    <div id="soundDiv">Sound:
+    <audio id="myAudio">
+    <source src="sounds/pacman_DubstepRemix.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+    </audio>
+    <img id="ghosts_music" src="pics\unmute.png" width="30" onclick="MuteSound()">
+    </div>
+  </div>
+
+	<div id="logIn" class="content">
+  <form id="loginForm">
+    <lable>User name: </lable>
+    <input type="text" required id="usernmLogin" value="" pattern="[a-zA-Z0-9]+">
+    <br><br>
+    <lable>Password: </lable>
+    <input type="password" required id="pwLogin" value="" minlength="8" pattern="[-zA-Z0-9]+">
+  	<br><br>
+    </form><br><br><br><br><br><br><br>
+    <input type="submit" onclick="enterClick()" value="Login">	
+	</div>
+
+<div id="startScreen" class="content"> 
+<div class="wrapper">
+  <nav class="vertical">
+    <ul>
+      <li>
+        <div>
+          <ul>
+            <li> <a id="aboutB1" class="firstbutton" onclick="ShowAbout()">About & Instructions</a></li>
+            <li><a id="loginB1" class="firstbutton" onclick="loginClick()">Log In</a></li>
+            <li><a id="signinB1" class="firstbutton" onclick="signinClick()">Sign In</a></li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+  </nav>
+</div>  
+</div>
+
+	<div id="signIn" class="content">
+	<form name="signinForm" id="signinForm" action="mailto:elinorsh92@gmail.com" method="post" enctype="text/plain" autocomplete="off">
+    <lable>User name: </lable>
+    <input name="usernmSignin" type="text" id="usernmSignin">
+    <br><br>
+    <lable>Password: </lable>
+    <input name="pwSignin" type="password" id="pwSignin" value="" >
+    <br><br>
+    <lable>First name: </lable>
+    <input name="firstname" type="text" id="firstname" value="">
+    <br><br>
+    <lable>Last name: </lable>
+    <input name="lastname" type="text" id="lastname" value="" >
+    <br><br>
+    <lable>Email Addr.: </lable>
+    <input name="email" type="email" id="email" value="">
+    <br><br>
+    <lable>BirthDate: </lable><br/>
+    <select id="years"></select>
+    <select id="months"></select>
+    <select id="days"></select>
+    <br><br>
+  
+    <input type="submit" value="Submit">
+  	<input type="reset" value="Reset">
+  </form> 
+	</div>
+
+  <div id="gameSettings" class="content">
+  <form oninput="x.value=parseInt(ballsSet.value)">
+    Number Of Ghosts:<br>
+    <select name="ghostsSet" id="ghostsSet">
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3" selected>3</option>
+  </select>
+    <br>
+    Number Of Balls:<br>
+      50<input type="range" id="ballsSet" name="ballsNumBar" value="90" min="50" max="90">90
+      <br><output name="x" for="ballsSet"></output>
+    <br>
+    Maximum Time Of The Game:<br>
+    <input type="number" id="timeSet" name="timeGame" min="1" max="5" size="2" value="2"> minutes
+    <br><br> 
+    Game Difficulty<br>Level (Ghosts speed):
+    <select name="speedSet" id="speedSet">
+    <option value="1">Easy</option>
+    <option value="2" selected>Medium</option>
+    <option value="3">Hard</option>
+    </select><br>Points Requireds:
+      <select name="scoreSet" id="scoreSet">
+    <option value="150">150</option>
+    <option value="200" selected>200</option>
+    <option value="250">250</option>
+    </select>
+    <br><br> 
+    </form>
+    <input type="submit" onclick="gameSettingsClick()" value="Start!">
+</div>
+
+<dialog id="about">
+<p> Hello! A liitle bit about the game:<br/>
+In this Pacman game we used java script, jquery and HTML5 elements and did not use any templates. <br/>
+We used jQuery at the login and signin form validations. Java script has used us mainly for the purpose of building and managing the game board.<br/>
+Working on this game was very enjoyable. The main challenge during the work was in the javascript validations and the game logic. <br/>
+We added 3 extra functions: <br/>
+1. The user can choose the ghosts speed <br/> 
+2. The user can choose number of points needed to win <br/>
+3. If the pacman has less than 3 lives, a one-time extra life in the shape of an heart will appread in a random time. <br/><br/>
+~*~Some Instructions~*~<br/>
+This is a version of the popular Pacman game!<br/>
+To move the pacman use your keyboard arrorws. Everytime you hit a ghost, you lose life. If you see a heart on the board - that's an extra life bonus!<br/>
+A cookie is a food that worth 50 points. To finish the game you need to survive the entire time or finish taking all the points.
+To play you have to register or login first. <br/>
+At any moment you can press the main logo to return to the main page. <br/>
+When you start the game, a setting menu will appeared to let you choose your game preferences.<br/>
+Attention: Pressing the about button during the game won't pause the game!<br/><br/>
+Hope you will enjoy playing our game! <br/>
+Noga And Elinor
+</p>
+<button onclick="closeDialog()">close</button>
+</dialog>
+
+  <div id="gameover" class="content"> 
+  <h2 id="gameovertext"></h2>
+  <button onclick="ShowSettings()">Play Again!</button>
+  </div>
+
+
+</div>
+
+<footer id="footer">
+&copy; Nogi and Eli. ~*~*~ Contact Us via mail: Noga: noga.agmon1@gmail.com or Elinor: elinorsh92@gmail.com ~*~*~
+</footer>
+
+</body>
+	
+</html>
